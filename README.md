@@ -9,7 +9,7 @@ Interface Utilisateur avec React.js : Développement d'une interface utilisateur
 
 Configuration Rapide
 ````
-Cloner le Projet : git clone https://github.com/hasnaerguig1999/gestion-des-utilisate
+Cloner le Projet : git clone https://github.com/hasnaerguig1999/gestion-des-utilisateur
 
 ````
 # Installer les Dépendances :
