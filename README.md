@@ -21,11 +21,12 @@ npm install
 ````
 Configurer l'Environnement : Copier le fichier .env.example en .env et configurer les variables d'environnement nécessaires.
 # Lancer l'Application :
-- Backend :
+ Backend 
   ````
 npm run start
   ````
--Frontend :
+Frontend 
+
 ````
 npm start
 ````
