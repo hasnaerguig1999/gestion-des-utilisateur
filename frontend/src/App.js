@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import {
   Box,
   Container,
@@ -17,23 +17,31 @@ import { GlobalContext } from './context/GlobalWrapper';
 
 
 function App() {
-  const {FetchUsers,users} = useContext(GlobalContext);
+  const {FetchUsers,users,Search} = useContext(GlobalContext);
+  const [query,setQuery] = useState("");
   useEffect(() =>{
     FetchUsers();
   },[]);
+  const SearchHandler =(query)=>{
+    Search(query)
+  };
+  const onchangeHandler = (e) =>{
+    setQuery(e.target.value);
+  }
   return (
     <div className="App">
       <Container maxW={'full'} p="4" fontSize={'18px'}>
         <Box rounded="lg" boxShadow="base" p="4">
           <Box mt="2" gap={"2"} mb={"4"} display={"flex"}>
             <FormControl>
-              <Input type='email' />
+              <Input type='text' onChange={onchangeHandler} />
             </FormControl>
             <Button leftIcon={<CiSearch />}
               colorScheme='teal'
               variant='outline'
               maxW={"300px"}
               minW={"150px"}
+              onClick={() =>SearchHandler(query)}
 
             >
               Search
@@ -71,6 +79,7 @@ function App() {
                 {
                   users?.map(({_id, fullname,email,age,country}) =>{
                     return <Row
+                    key={_id}
                     id={_id}
                     fullname={fullname}
                     email={email}

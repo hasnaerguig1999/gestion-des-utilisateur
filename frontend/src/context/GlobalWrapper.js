@@ -4,6 +4,7 @@ export const GlobalContext = createContext();
 
 export default function Wrapper({children}){
     const [users,setUsers ]= useState([])
+    
     const FetchUsers = ()=>{
         axios.get('/api/users')
         .then(res=>{
@@ -12,9 +13,19 @@ export default function Wrapper({children}){
         .catch((err) =>{
             console.log(err.response);
         })
+    };
+    const Search = (query) => {
+        axios.post(`/api/users/search?key=${query}`)
+            .then(res => {
+                setUsers(res.data);
+            })
+            .catch((err) => {
+                console.log(err.response);
+            });
     }
+    
     return (
-    <GlobalContext.Provider value={{FetchUsers, users}}>
+    <GlobalContext.Provider value={{FetchUsers, users,Search}}>
         {children}
     </GlobalContext.Provider>
     );

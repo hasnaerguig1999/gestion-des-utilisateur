@@ -25,8 +25,8 @@ export class UsersController {
         Delete(@Param('id') id:string){
             return this.service.Delete(id);
         }
-        @Post("/search")
-        Search(@Query('key') key){
+        @Get("/search")
+        Search(@Query('key') key:string){
             return this.service.Search(key);
         }
         @Post('faker')
