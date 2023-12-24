@@ -1,10 +1,14 @@
 import axios from 'axios';
+import { useDisclosure } from '@chakra-ui/react'
 import {createContext, useState} from 'react';
 
 import { useToast } from '@chakra-ui/react'
 export const GlobalContext = createContext();
 export default function Wrapper({children}){
     const [users,setUsers ]= useState([])
+    const [errors,setErrors] = useState({})
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
     const toast = useToast()
     
     const FetchUsers = ()=>{
@@ -41,9 +45,28 @@ export default function Wrapper({children}){
             console.log(err.response);
         })
     }
+
+    const Add = (form,setForm)=>{
+        axios.post(`/api/users`,form)
+        .then(res =>{
+            setUsers([...users,res.data]);
+            toast({
+                title: 'users added.',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+              })
+              setErrors({})
+              setForm({})
+                onClose()
+        })
+        .catch((err) =>{
+           setErrors(err.response.data.error)
+        })
+    }
     
     return (
-    <GlobalContext.Provider value={{FetchUsers,users,Search,Delete}}>
+    <GlobalContext.Provider value={{FetchUsers,users,Add,Search,Delete,onOpen,onClose,isOpen,errors,setErrors}}>
         {children}
     </GlobalContext.Provider>
     );

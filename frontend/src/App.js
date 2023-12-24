@@ -8,16 +8,18 @@ import {
   Button,
   Input,
   Text,
-  Th,Tr,Thead,Tbody,Table,TableContainer
+  Th,Tr,Thead,Tbody,Table,TableContainer, Drawer
 } from '@chakra-ui/react';
 import { CiSearch } from "react-icons/ci";
 import { AiOutlinePlus } from "react-icons/ai";
 import Row from './components/Row';
+import DrawerExample from './context/DrawerExample';
 import { GlobalContext } from './context/GlobalWrapper';
 
 
+
 function App() {
-  const {FetchUsers,users,Search} = useContext(GlobalContext);
+  const {FetchUsers,users,Search,onOpen,isOpen,onClose} = useContext(GlobalContext);
   const [query,setQuery] = useState("");
   useEffect(() =>{
     FetchUsers();
@@ -58,7 +60,9 @@ function App() {
               variant="outline"
               maxW={"300px"}
               minW={"150px"}
-              leftIcon={<AiOutlinePlus fontSize={'20px'} />}
+              leftIcon={<AiOutlinePlus fontSize={'20px'} 
+              onClick={onOpen}
+              />}
             >
               Add User
             </Button>
@@ -92,6 +96,7 @@ function App() {
             </Table>
           </TableContainer>
         </Box>
+        <DrawerExample />
       </Container>
     </div>
   );
