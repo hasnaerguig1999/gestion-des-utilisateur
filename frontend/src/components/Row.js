@@ -9,7 +9,8 @@ import { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalWrapper';
 
 export default function Row({ id, fullname, email, age, country }) {
-    const {Delete} = useContext(GlobalContext);
+    const {Delete,onOpen,FindOne} = useContext(GlobalContext);
+
     return (
         <>
             <Tr>
@@ -23,7 +24,8 @@ export default function Row({ id, fullname, email, age, country }) {
 
                 <Td>
                     <Box display="flex" gap="1">
-                        <Button colorScheme='yellow'>
+                        <Button colorScheme='yellow' onClick={()=>{onOpen();
+                        FindOne(id);}}>
                             <FaEdit />
                         </Button>
                         <Button colorScheme='red' onClick={() => Delete(id)}>

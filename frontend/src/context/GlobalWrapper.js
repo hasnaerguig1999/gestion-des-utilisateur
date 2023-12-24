@@ -6,6 +6,7 @@ import { useToast } from '@chakra-ui/react'
 export const GlobalContext = createContext();
 export default function Wrapper({children}){
     const [users,setUsers ]= useState([])
+    const [user,setUser] = useState({})
     const [errors,setErrors] = useState({})
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -64,9 +65,40 @@ export default function Wrapper({children}){
            setErrors(err.response.data.error)
         })
     }
+    const FindOne = async (id)=>{
+        await axios.get(`/api/users/${id}`)
+        .then(res =>{
+            setUser(res.data);
+        })
+        .catch((err) =>{
+            setErrors(err.response.data.error)
+        })
+    }
+
+    const Update = (form,setForm,id)=>{
+        axios.put(`/api/users/${id}`,form)
+        .then(res =>{
+           
+            toast({
+                title: 'users updated.',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+              })
+              setErrors({})
+              setForm({})
+                onClose()
+                FetchUsers()
+        })
+        .catch((err) =>{
+           setErrors(err.response.data.error)
+        })
+    }
+
+
     
     return (
-    <GlobalContext.Provider value={{FetchUsers,users,Add,Search,Delete,onOpen,onClose,isOpen,errors,setErrors}}>
+    <GlobalContext.Provider value={{FetchUsers,users,Add,Search,Delete,onOpen,onClose,isOpen,errors,setErrors,FindOne,user,setUser,Update}}>
         {children}
     </GlobalContext.Provider>
     );
