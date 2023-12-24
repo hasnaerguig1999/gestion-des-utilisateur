@@ -5,8 +5,11 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import { Avatar } from '@chakra-ui/react'
+import { useContext } from 'react';
+import { GlobalContext } from '../context/GlobalWrapper';
 
 export default function Row({ id, fullname, email, age, country }) {
+    const {Delete} = useContext(GlobalContext);
     return (
         <>
             <Tr>
@@ -23,7 +26,7 @@ export default function Row({ id, fullname, email, age, country }) {
                         <Button colorScheme='yellow'>
                             <FaEdit />
                         </Button>
-                        <Button colorScheme='red'>
+                        <Button colorScheme='red' onClick={() => Delete(id)}>
                             <MdDeleteOutline />
                         </Button>
 
